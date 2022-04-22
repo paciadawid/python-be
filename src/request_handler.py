@@ -21,3 +21,7 @@ class RequestsHandler:
     def delete_request(self, endpoint):
         res = requests.delete(self.base_url + endpoint, headers=self.headers)
         return res.status_code
+
+    def put_request(self, endpoint, body=None):
+        res = requests.put(self.base_url + endpoint, headers=self.headers, json=body)
+        return res.status_code, res.json()
