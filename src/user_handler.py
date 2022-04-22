@@ -10,7 +10,7 @@ class UserHandler(RequestsHandler):
     def create_user(self, body: dict, expected_status_code=201):
         status_code, response_body = self.post_request(self.users_endpoint, body)
         assert_that(status_code, equal_to(expected_status_code))
-        return response_body["id"]
+        return response_body
 
     def get_user(self, user_id, expected_status_code=200):
         status_code, response_body = self.get_request(self.users_endpoint + "/" + str(user_id))
