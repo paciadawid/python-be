@@ -1,4 +1,3 @@
-from faker import Faker
 from hamcrest import *
 
 from src.request_handler import RequestsHandler
@@ -28,11 +27,10 @@ class UserHandler(RequestsHandler):
         return response_body
 
     def generate_unique_user_data(self):
-        fake = Faker()
         json_body = {
-            "name": fake.name(),
-            "gender": fake.random_element(elements=('male', 'female')),
-            "email": fake.email(),
-            "status": fake.random_element(elements=('active', 'inactive')),
+            "name": self.fake.name(),
+            "gender": self.fake.random_element(elements=('male', 'female')),
+            "email": self.fake.email(),
+            "status": self.fake.random_element(elements=('active', 'inactive')),
         }
         return json_body

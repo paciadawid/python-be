@@ -1,4 +1,5 @@
 import requests
+from faker import Faker
 
 
 class RequestsHandler:
@@ -9,6 +10,7 @@ class RequestsHandler:
         self.headers = {
             "Authorization": f"Bearer {token}"
         }
+        self.fake = Faker()
 
     def post_request(self, endpoint, body=None):
         res = requests.post(self.base_url + endpoint, headers=self.headers, json=body)

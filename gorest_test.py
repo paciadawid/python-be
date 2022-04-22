@@ -1,16 +1,15 @@
 import unittest
 
-from faker import Faker
 from hamcrest import *
 
 from config import TOKEN
+from src.post_handler import PostHandler
 from src.user_handler import UserHandler
 
 
 class UserTests(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.fake = Faker()
         self.user_handler = UserHandler(TOKEN)
 
     def test_create_user(self):
@@ -51,8 +50,17 @@ class UserTests(unittest.TestCase):
 
 class PostsTests(unittest.TestCase):
 
-    def test_post(self):
-        pass
+    def setUp(self) -> None:
+        self.user_handler = UserHandler(TOKEN)
+        self.post_handler = PostHandler(TOKEN)
+
+    def test_post_removal_after_user_deleted(self):
+        user_data = self.user_handler.generate_unique_user_data()
+        self.user_id = self.user_handler.create_user(user_data)["id"]
+        post_data = self.post_handler.generate_post_content()
+        post_id = self.post_handler.create_post(self.user_id, post_data)["id"]
+        self.user_handler.delete_user(self.user_id)
+        self.post_handler.get_post(post_id, 404)
 
 
 if __name__ == '__main__':
